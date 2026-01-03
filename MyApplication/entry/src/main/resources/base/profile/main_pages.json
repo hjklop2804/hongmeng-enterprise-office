@@ -1,0 +1,13 @@
+{
+  "src": [
+    "pages/Index",
+    "pages/Login/Login",
+    "pages/ForgetPassword/ForgetPassword",
+    "pages/Work/Work",
+    "pages/leave/leave",
+    "pages/clock/clock",
+    "pages/Salary/Salary",
+    "pages/Notice/Notice",
+    "pages/Rule/Rule"
+  ]
+}
