@@ -1,0 +1,411 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "企业OA系统 API",
+    "description": "基于 HarmonyOS 移动端开发的办公自动化系统后端接口模拟",
+    "version": "1.0.0"
+  },
+  "tags": [
+    {
+      "name": "User"
+    },
+    {
+      "name": "Company"
+    }
+  ],
+  "paths": {
+    "/user/login": {
+      "post": {
+        "summary": "用户登录",
+        "deprecated": false,
+        "description": "验证用户名和密码",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "in": "query",
+            "description": "用户名",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "admin"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "密码",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "123456"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "登录成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResponse"
+                },
+                "example": {
+                  "status": "success",
+                  "message": "登录成功",
+                  "userInfo": {
+                    "username": "许夏天"
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/leave": {
+      "post": {
+        "summary": "提交请假申请",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "selectIndex",
+            "in": "query",
+            "description": "请假类型索引 (0:事假, 1:病假, 2:外勤, 3:其他)",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "example": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "提交成功",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LeaveResponse"
+                },
+                "example": {
+                  "leaveInfo": "您的请假申请已提交系统，请等待审批",
+                  "agree": 1
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/user/salary": {
+      "get": {
+        "summary": "获取工资单详情",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "User"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功获取",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SalaryResponse"
+                },
+                "example": {
+                  "month": "2025年11月",
+                  "realPay": 13200,
+                  "details": [
+                    {
+                      "label": "基本工资",
+                      "value": "10000.00",
+                      "type": "income"
+                    },
+                    {
+                      "label": "岗位绩效",
+                      "value": "3000.00",
+                      "type": "income"
+                    },
+                    {
+                      "label": "交通补贴",
+                      "value": "500.00",
+                      "type": "income"
+                    },
+                    {
+                      "label": "社保个人部分",
+                      "value": "-800.00",
+                      "type": "expense"
+                    },
+                    {
+                      "label": "公积金个人部分",
+                      "value": "-500.00",
+                      "type": "expense"
+                    },
+                    {
+                      "label": "个人所得税",
+                      "value": "-200.00",
+                      "type": "expense"
+                    }
+                  ]
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/company/notice": {
+      "get": {
+        "summary": "获取公司公告列表",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Company"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功获取",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/NoticeItem"
+                  }
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "id": 1,
+                      "title": "关于2025年春节放假安排的通知",
+                      "publisher": "行政部",
+                      "date": "2025-01-15",
+                      "type": "urgent"
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "id": 2,
+                      "title": "2024年度优秀员工评选结果公示",
+                      "publisher": "人力资源部",
+                      "date": "2025-01-10",
+                      "type": "new"
+                    }
+                  },
+                  "3": {
+                    "summary": "成功示例",
+                    "value": {
+                      "id": 3,
+                      "title": "关于开展年度绩效考核的通知",
+                      "publisher": "人力资源部",
+                      "date": "2024-12-28",
+                      "type": "normal"
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    },
+    "/company/rules": {
+      "get": {
+        "summary": "获取规章制度列表",
+        "deprecated": false,
+        "description": "",
+        "tags": [
+          "Company"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "成功获取",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RuleItem"
+                  }
+                },
+                "examples": {
+                  "1": {
+                    "summary": "成功示例",
+                    "value": {
+                      "id": 1,
+                      "title": "员工日常行为规范手册 (2025版)",
+                      "category": "人事",
+                      "date": "2025-01-01",
+                      "readCount": 1205
+                    }
+                  },
+                  "2": {
+                    "summary": "成功示例",
+                    "value": {
+                      "id": 2,
+                      "title": "公司差旅费报销管理制度",
+                      "category": "财务",
+                      "date": "2024-12-15",
+                      "readCount": 890
+                    }
+                  },
+                  "3": {
+                    "summary": "成功示例",
+                    "value": {
+                      "id": 3,
+                      "title": "办公用品申领及使用规定",
+                      "category": "行政",
+                      "date": "2024-11-20",
+                      "readCount": 450
+                    }
+                  }
+                }
+              }
+            },
+            "headers": {}
+          }
+        },
+        "security": []
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "LoginResponse": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "userInfo": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "LeaveResponse": {
+        "type": "object",
+        "properties": {
+          "leaveInfo": {
+            "type": "string"
+          },
+          "agree": {
+            "type": "integer",
+            "description": "0: 拒绝, 1: 同意"
+          }
+        }
+      },
+      "SalaryDetail": {
+        "type": "object",
+        "properties": {
+          "label": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "income",
+              "expense"
+            ]
+          }
+        }
+      },
+      "SalaryResponse": {
+        "type": "object",
+        "properties": {
+          "month": {
+            "type": "string"
+          },
+          "realPay": {
+            "type": "number"
+          },
+          "details": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalaryDetail"
+            }
+          }
+        }
+      },
+      "NoticeItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "publisher": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "urgent",
+              "new",
+              "normal"
+            ]
+          }
+        }
+      },
+      "RuleItem": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "title": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "date": {
+            "type": "string"
+          },
+          "readCount": {
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "responses": {},
+    "securitySchemes": {}
+  },
+  "servers": [],
+  "security": []
+}
